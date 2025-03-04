@@ -46,7 +46,7 @@ public class UserController {
 	public void addCommonData(Model model,Principal principal) {
 		String userName = principal.getName();
 		System.out.println("USERNAME "+userName);
-		 	
+		 		
 		
 		User user = userRepository.getUserByUserName(userName);
 		
@@ -63,7 +63,6 @@ public class UserController {
 		model.addAttribute("title","User Dashboard");
 		return "normal/user_dashboard";
 	}
-	
 	
 	 
 	@GetMapping("/add-contact")
@@ -86,10 +85,13 @@ public class UserController {
 			
 		String name = principal.getName();
 		User user = this.userRepository.getUserByUserName(name);
+		
+	
+		
 		 
 		
 		if(file.isEmpty())
-		 
+		{ 
 			System.out.println("File is empty");
 			
 		}
@@ -120,12 +122,14 @@ public class UserController {
 		System.out.println("DATA "+contact);
 		
 		System.out.println("Added to data base");
+		
 		 
 		session.setAttribute("message", new Message("Your contact is added !! Add more..", "success") );
 		
 		}catch (Exception e) {		
 			System.out.println("ERROR "+e.getMessage());
-			e.printStackTrace(); 
+			e.printStackTrace();
+		 
 			session.setAttribute("message", new Message("Some went wrong !! Try again..", "danger") );
 			
 		}
@@ -135,11 +139,13 @@ public class UserController {
 	 
 	@GetMapping("/show-contacts/{page}")
 	public String showContacts(@PathVariable("page") Integer page ,Model m,Principal principal) {
-		m.addAttribute("title","Show User Contacts"); 
+		m.addAttribute("title","Show User Contacts");
+		 
 		
 		String userName = principal.getName();
 		
 		User user = this.userRepository.getUserByUserName(userName);
+		
 		 
 		Pageable pageable = PageRequest.of(page, 8);
 		
